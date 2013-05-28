@@ -8,7 +8,6 @@ class GB_Registration extends Group_Buying_Controller {
 
 	// Customize the redirect urls here.
 	const STEP_2_URL_PATH = '/view-your-options/';
-	const STEP_3_URL_PATH = '/choose-your-options/';
 	const STEP_4_URL_PATH = '/detailed-business-information-step-2/';
 	const STEP_5_URL_PATH = '/your-application-has-been-submitted/';
 
@@ -23,7 +22,6 @@ class GB_Registration extends Group_Buying_Controller {
 	}
 
 	public function maybe_process_form() {
-		error_log( 'post' . print_r( $_POST, TRUE ) );
 		if ( isset( $_POST[self::FORM_ACTION] ) ) {
 			switch ( $_POST[self::FORM_ACTION] ) {
 			case self::STEP_1_ACTION:
@@ -50,6 +48,7 @@ class GB_Registration extends Group_Buying_Controller {
 
 	/**
 	 * Display the registration form
+	 *
 	 * @return
 	 */
 	public function merchant_registration_form() {
@@ -57,11 +56,12 @@ class GB_Registration extends Group_Buying_Controller {
 			'step' => self::STEP_1_ACTION,
 			'next_page_url' => self::STEP_2_URL_PATH
 		);
-		echo self::_load_view_to_string( 'registration-form', $args );
+		print self::_load_view_to_string( 'registration-form', $args );
 	}
 
 	/**
 	 * Process the mixed registration page
+	 *
 	 * @return
 	 */
 	public function process_mixed_registration() {
@@ -77,13 +77,16 @@ class GB_Registration extends Group_Buying_Controller {
 		}
 		// Redirect
 		if ( $merchant_id ) {
+			error_log( 'redirect' . print_r( site_url( self::STEP_2_URL_PATH ), TRUE ) );
 			wp_redirect( site_url( self::STEP_2_URL_PATH ) );
+			exit();
 		}
 
 	}
 
 	/**
 	 * Process the user registration form
+	 *
 	 * @return int user_id
 	 */
 	public function register_user_account() {
@@ -140,7 +143,7 @@ class GB_Registration extends Group_Buying_Controller {
 			'allowfullscreen' => true
 		);
 		$content = isset( $_POST['gb_contact_merchant_description'] ) ? wp_kses( $_POST['gb_contact_merchant_description'], $allowed_tags ) : '';
-		$contact_title = isset( $_POST['gb_contact_title'] ) ? esc_html( $_POST['gb_contact_title'] ) : '';
+		$contact_title = isset( $_POST['gb_contact_merchant_title'] ) ? esc_html( $_POST['gb_contact_merchant_title'] ) : '';
 		$contact_name = isset( $_POST['gb_contact_name'] ) ? esc_html( $_POST['gb_contact_name'] ) : '';
 		$contact_street = isset( $_POST['gb_contact_street'] ) ? esc_html( $_POST['gb_contact_street'] ) : '';
 		$contact_city = isset( $_POST['gb_contact_city'] ) ? esc_html( $_POST['gb_contact_city'] ) : '';
@@ -198,14 +201,28 @@ class GB_Registration extends Group_Buying_Controller {
 
 
 	public function options_form() {
+		$merchants = gb_get_merchants_by_account();
+		$merchant_id = $merchants[0];
 		$args = array(
-			'step' => self::STEP_3_ACTION
+			'step' => self::STEP_3_ACTION,
+			'merchant_id' => $merchant_id
 		);
-		echo self::_load_view_to_string( 'options-form', $args );
+		print self::_load_view_to_string( 'options-form', $args );
 	}
 
 	public function process_options() {
+		$errors = array();
+		$merchants = gb_get_merchants_by_account();
+		$merchant_id = $merchants[0];
 
+		$package = isset( $_POST['gb_merchant_package_option'] ) ? $_POST['gb_merchant_package_option'] : '';
+		GBS_Fields::set_package( $merchant_id, $package );
+
+		// Redirect
+		if ( empty( $errors ) ) {
+			wp_redirect( site_url( self::STEP_4_URL_PATH ) );
+			exit();
+		}
 	}
 
 
@@ -215,14 +232,43 @@ class GB_Registration extends Group_Buying_Controller {
 
 
 	public function detailed_business_info_form() {
+		$merchants = gb_get_merchants_by_account();
+		$merchant_id = $merchants[0];
 		$args = array(
-			'step' => self::STEP_4_ACTION
+			'step' => self::STEP_4_ACTION,
+			'merchant_id' => $merchant_id
 		);
-		echo self::_load_view_to_string( 'detailed-biz-form', $args );
+		print self::_load_view_to_string( 'detailed-biz-form', $args );
 	}
 
 	public function process_detailed_merchant_info() {
+		$errors = array();
+		$merchants = gb_get_merchants_by_account();
+		$merchant_id = $merchants[0];
 
+		$advertising_methods = isset( $_POST['advertising_methods'] ) ? $_POST['advertising_methods']  : '';
+		$time_in_biz = isset( $_POST['time_in_biz'] ) ? $_POST['time_in_biz']  : '';
+		$details = isset( $_POST['details'] ) ? $_POST['details']  : '';
+		$promo_methods = isset( $_POST['promo_methods'] ) ? $_POST['promo_methods']  : '';
+		$internet_marketing = isset( $_POST['internet_marketing'] ) ? $_POST['internet_marketing']  : '';
+		$does_int_marketing = isset( $_POST['does_int_marketing'] ) ? $_POST['does_int_marketing']  : '';
+		$biz_hours = isset( $_POST['biz_hours'] ) ? $_POST['biz_hours']  : '';
+		$storefront_detail = isset( $_POST['storefront_detail'] ) ? $_POST['storefront_detail']  : '';
+
+		GBS_Fields::set_advertising_methods( $merchant_id, $advertising_methods );
+		GBS_Fields::set_time_in_biz( $merchant_id, $time_in_biz );
+		GBS_Fields::set_details( $merchant_id, $details );
+		GBS_Fields::set_promo_methods( $merchant_id, $promo_methods );
+		GBS_Fields::set_internet_marketing( $merchant_id, $internet_marketing );
+		GBS_Fields::set_does_int_marketing( $merchant_id, $does_int_marketing );
+		GBS_Fields::set_biz_hours( $merchant_id, $biz_hours );
+		GBS_Fields::set_storefront_detail( $merchant_id, $storefront_detail );
+
+		// Redirect
+		if ( empty( $errors ) ) {
+			wp_redirect( site_url( self::STEP_5_URL_PATH ) );
+			exit();
+		}
 	}
 
 

@@ -3,10 +3,21 @@
 	<legend>Legend</legend>
 
 	<div class="control-group">
-		<label class="control-label" for="gb_contact_merchant_title">Company Name</label>
+		<label class="control-label" for="gb_merchant_package_option">Select Your Package Option:</label>
 		<div class="controls">
-			<input type="text" name="gb_contact_merchant_title" placeholder="Placeholder text..." value="<?php if ( isset( $_REQUEST['gb_contact_merchant_title'] ) ) echo $_REQUEST['gb_contact_merchant_title']; ?>" required>
-			<span class="help-block">Example block-level help text here.</span>
+
+			<label class="radio">
+				<input type="radio" name="gb_merchant_package_option" id="gb_merchant_package_option1" value="1">
+				Option 1: Storefront Marketing Package - with coupon specials and business listing.
+			</label>
+			<label class="radio">
+				<input type="radio" name="gb_merchant_package_option" id="gb_merchant_package_option2" value="2">
+				Option 2: Online Store/Checkout - with a full online store and featured business listing.
+			</label>
+			<label class="radio">
+				<input type="radio" name="gb_merchant_package_option" id="gb_merchant_package_option3" value="3">
+				Package Options 1 & 2 (Both) - All the featured of packages A & B Included.
+			</label>
 		</div>
 	</div>
 
