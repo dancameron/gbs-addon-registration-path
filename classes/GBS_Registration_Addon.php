@@ -1,11 +1,13 @@
 <?php
 
 
-class GBS_Dynamic_Charities_Addon {
+class GBS_Registration_Addon {
 
 	public static function init() {
-		require_once 'GB_Registration.php';
+		require_once 'GBS_Registration.php';
 		GB_Registration::init();
+		require_once 'GBS_Fields.php';
+		GBS_Fields::init();
 	}
 
 	public static function gb_addon( $addons ) {
