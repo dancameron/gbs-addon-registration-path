@@ -65,19 +65,11 @@ class GB_Registration extends Group_Buying_Controller {
 	 * @return
 	 */
 	public function process_mixed_registration() {
-		$user_id = 0;
-		// attempt to register user
-		if ( !is_user_logged_in() ) {
-			$user_id = self::register_user_account();
-		}
-		$merchant_id = 0;
-		// Process merchant registration if user was registered
-		if ( $user_id ) {
-			$merchant_id = self::register_merchant( $user_id );
-		}
+		$user_id = ( is_user_logged_in() ) ? get_current_user_id() : self::register_user_account() ;
+		$merchant_id = ( $user_id ) ? self::register_merchant( $user_id ) : 0 ;
+
 		// Redirect
 		if ( $merchant_id ) {
-			error_log( 'redirect' . print_r( site_url( self::STEP_2_URL_PATH ), TRUE ) );
 			wp_redirect( site_url( self::STEP_2_URL_PATH ) );
 			exit();
 		}
@@ -115,7 +107,6 @@ class GB_Registration extends Group_Buying_Controller {
 						'user_password' => $password,
 						'remember' => false
 					), false );
-				error_log( 'user: ' . print_r( $user, TRUE ) );
 				do_action( 'gb_registration', $user, $sanitized_user_login, $user_email, $password, $_POST );
 			}
 		}
@@ -191,7 +182,6 @@ class GB_Registration extends Group_Buying_Controller {
 				$merchant->set_attachement( $_FILES, 'gb_contact_merchant_thumbnail' );
 			}
 		}
-		error_log( 'post id' . print_r( $post_id, TRUE ) );
 		return $post_id;
 	}
 
