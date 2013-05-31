@@ -56,7 +56,7 @@ class GB_Registration extends Group_Buying_Controller {
 			'step' => self::STEP_1_ACTION,
 			'next_page_url' => self::STEP_2_URL_PATH
 		);
-		print self::_load_view_to_string( 'registration-form', $args );
+		return self::_load_view_to_string( 'registration-form', $args );
 	}
 
 	/**
@@ -197,7 +197,7 @@ class GB_Registration extends Group_Buying_Controller {
 			'step' => self::STEP_3_ACTION,
 			'merchant_id' => $merchant_id
 		);
-		print self::_load_view_to_string( 'options-form', $args );
+		return self::_load_view_to_string( 'options-form', $args );
 	}
 
 	public function process_options() {
@@ -228,7 +228,7 @@ class GB_Registration extends Group_Buying_Controller {
 			'step' => self::STEP_4_ACTION,
 			'merchant_id' => $merchant_id
 		);
-		print self::_load_view_to_string( 'detailed-biz-form', $args );
+		return self::_load_view_to_string( 'detailed-biz-form', $args );
 	}
 
 	public function process_detailed_merchant_info() {
