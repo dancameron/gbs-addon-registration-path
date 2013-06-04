@@ -1,9 +1,8 @@
 <?php if ( $merchant_id ):
 	$merchant = Group_Buying_Merchant::get_instance( $merchant_id ); ?>
 
-	<form action="" method="post" enctype="multipart/form-data" id="mixed_registration_form" class="registration_form">
+	<form action="" method="post" enctype="multipart/form-data" id="mixed_registration_form" class="registration_form choose-options">
 	  <fieldset>
-		<legend>Legend</legend>
 
 		<div class="control-group">
 			<label class="control-label" for="gb_merchant_package_option">Select Your Package Option:</label>
@@ -74,7 +73,7 @@
 
 		<input name="<?php echo $FORM_ACTION ?>" type="hidden" value="<?php echo $step ?>" />
 
-		<button type="submit" class="btn">Submit</button>
+		<button type="submit" class="reg-button">Submit</button>
 	  </fieldset>
 	</form>
 
