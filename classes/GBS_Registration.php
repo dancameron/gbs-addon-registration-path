@@ -146,6 +146,7 @@ class GB_Registration extends Group_Buying_Controller {
 		$facebook = isset( $_POST['gb_contact_facebook'] ) ? esc_url( $_POST['gb_contact_facebook'] ) : '';
 		$twitter = isset( $_POST['gb_contact_twitter'] ) ? esc_url( $_POST['gb_contact_twitter'] ) : '';
 		$type_id = isset( $_POST['gb_merchant_type'] ) ? (int) $_POST['gb_merchant_type'] : '';
+
 		$errors = apply_filters( 'gb_validate_merchant_registration', $errors, $_POST );
 		if ( !empty( $errors ) ) {
 			foreach ( $errors as $error ) {
@@ -204,9 +205,24 @@ class GB_Registration extends Group_Buying_Controller {
 		$errors = array();
 		$merchants = gb_get_merchants_by_account();
 		$merchant_id = $merchants[0];
+		$merchant = Group_Buying_Merchant::get_instance( $merchant_id );
+
+		$contact_street = isset( $_POST['gb_contact_street'] ) ? esc_html( $_POST['gb_contact_street'] ) : '';
+		$contact_city = isset( $_POST['gb_contact_city'] ) ? esc_html( $_POST['gb_contact_city'] ) : '';
+		$contact_state = isset( $_POST['gb_contact_state'] ) ? esc_html( $_POST['gb_contact_state'] ) : '';
+		$contact_country = isset( $_POST['gb_contact_country'] ) ? esc_html( $_POST['gb_contact_country'] ) : '';
+		$website = isset( $_POST['gb_contact_website'] ) ? esc_url( $_POST['gb_contact_website'] ) : '';
 
 		$package = isset( $_POST['gb_merchant_package_option'] ) ? $_POST['gb_merchant_package_option'] : '';
+
+		// Save
 		GBS_Fields::set_package( $merchant_id, $package );
+		$merchant->set_contact_street( $contact_street );
+		$merchant->set_contact_city( $contact_city );
+		$merchant->set_contact_state( $contact_state );
+		$merchant->set_contact_country( $contact_country );
+		$merchant->set_website( $website );
+
 
 		// Redirect
 		if ( empty( $errors ) ) {
