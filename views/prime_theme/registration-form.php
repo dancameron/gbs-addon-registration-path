@@ -79,6 +79,6 @@
 
 	<input name="<?php echo $FORM_ACTION ?>" type="hidden" value="<?php echo $step ?>" />
 
-	<button type="submit" class="reg-button">Submit Pre Registration</button>
+	<button type="submit" class="reg-button">Submit Registration</button>
   </fieldset>
 </form>

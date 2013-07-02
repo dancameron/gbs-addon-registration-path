@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Custom Merchant Registration
+Plugin Name: Advanced Merchant Registration
 Version: 1
 Plugin URI: http://groupbuyingsite.com/marketplace
 Description: Merchant registration includes account registration if not logged in.

@@ -7,8 +7,8 @@ class GB_Registration extends Group_Buying_Controller {
 	const STEP_4_ACTION = 'detailed_business_info';
 
 	// Customize the redirect urls here.
-	const STEP_2_URL_PATH = '/view-your-options/';
-	const STEP_4_URL_PATH = '/detailed-business-information-step-2/';
+	const STEP_2_URL_PATH = '/account/';
+	const STEP_4_URL_PATH = '/detailed-business-information/';
 	const STEP_5_URL_PATH = '/your-application-has-been-submitted/';
 
 	public static function init() {
@@ -70,7 +70,7 @@ class GB_Registration extends Group_Buying_Controller {
 
 		// Redirect
 		if ( $merchant_id ) {
-			wp_redirect( site_url( self::STEP_2_URL_PATH ) );
+			wp_redirect( site_url( apply_filters( 'gb_adv_merch_registration_step_two_path', self::STEP_2_URL_PATH ) ) );
 			exit();
 		}
 
@@ -216,7 +216,6 @@ class GB_Registration extends Group_Buying_Controller {
 		$package = isset( $_POST['gb_merchant_package_option'] ) ? $_POST['gb_merchant_package_option'] : '';
 
 		// Save
-		GBS_Fields::set_package( $merchant_id, $package );
 		$merchant->set_contact_street( $contact_street );
 		$merchant->set_contact_city( $contact_city );
 		$merchant->set_contact_state( $contact_state );
@@ -226,7 +225,7 @@ class GB_Registration extends Group_Buying_Controller {
 
 		// Redirect
 		if ( empty( $errors ) ) {
-			wp_redirect( site_url( self::STEP_4_URL_PATH ) );
+			wp_redirect( site_url( apply_filters( 'gb_adv_merch_registration_step_four_path', self::STEP_4_URL_PATH ) ) );
 			exit();
 		}
 	}
@@ -272,7 +271,7 @@ class GB_Registration extends Group_Buying_Controller {
 
 		// Redirect
 		if ( empty( $errors ) ) {
-			wp_redirect( site_url( self::STEP_5_URL_PATH ) );
+			wp_redirect( site_url( apply_filters( 'gb_adv_merch_registration_step_five_path', self::STEP_5_URL_PATH ) ) );
 			exit();
 		}
 	}
