@@ -33,6 +33,20 @@
 	</div>
 
 	<div class="control-group">
+		<label class="control-label" for="gb_contact_merchant_description">Company Description</label>
+		<div class="controls">
+			<textarea name="gb_contact_merchant_description" required><?php if ( isset( $_REQUEST['gb_contact_merchant_description'] ) ) echo $_REQUEST['gb_contact_merchant_description']; ?></textarea>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="gb_contact_merchant_thumbnail">Business Image</label>
+		<div class="controls">
+			<input type="file" name="gb_contact_merchant_thumbnail" id="gb_contact_merchant_thumbnail">
+		</div>
+	</div>
+
+	<div class="control-group">
 		<label class="control-label" for="gb_contact_name">Contact Name</label>
 		<div class="controls">
 			<input type="text" name="gb_contact_name" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_name'] ) ) echo $_REQUEST['gb_contact_name']; ?>" required>
@@ -49,7 +63,6 @@
 					foreach ( $merchant_types as $type ): ?>
 					<option value="<?php echo $type->term_id ?>" <?php selected( $type->ID, $_REQUEST['gb_merchant_type'] ) ?>><?php echo $type->name ?></option>
 				<?php endforeach ?>
-				<option selected="selected">...</option>
 			</select>
 		</div>
 	</div>
@@ -71,9 +84,23 @@
 	</div>
 
 	<div class="control-group">
-		<label class="control-label" for="gb_contact_postal_code">Company Zip Code</label>
+		<label class="control-label" for="gb_contact_website">Website</label>
 		<div class="controls">
-			<input type="text" name="gb_contact_postal_code" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_postal_code'] ) ) echo $_REQUEST['gb_contact_postal_code']; ?>" required>
+			<input type="text" name="gb_contact_website" id="gb_contact_website" value="<?php if ( isset( $_REQUEST['gb_contact_website'] ) ) echo $_REQUEST['gb_contact_website']; ?>">
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="gb_contact_facebook">Facebook</label>
+		<div class="controls">
+			<input type="text" name="gb_contact_facebook" id="gb_contact_facebook" value="<?php if ( isset( $_REQUEST['gb_contact_facebook'] ) ) echo $_REQUEST['gb_contact_facebook']; ?>">
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="gb_contact_twitter">Twitter</label>
+		<div class="controls">
+			<input type="text" name="gb_contact_twitter" id="gb_contact_twitter" value="<?php if ( isset( $_REQUEST['gb_contact_twitter'] ) ) echo $_REQUEST['gb_contact_twitter']; ?>">
 		</div>
 	</div>
 
