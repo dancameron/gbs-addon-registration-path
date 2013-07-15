@@ -65,6 +65,16 @@ class GB_Registration extends Group_Buying_Controller {
 	 * @return
 	 */
 	public function process_mixed_registration() {
+		if ( method_exists( 'Registration_Captcha', 'validate_account_fields' ) ) {
+			$errors = Registration_Captcha::validate_account_fields();
+			if ( is_array( $errors ) ) {
+				foreach ( $errors as $error ) {
+					self::set_message( $error, self::MESSAGE_STATUS_ERROR );
+				}
+				return FALSE;
+			}
+		}
+
 		$user_id = ( is_user_logged_in() ) ? get_current_user_id() : self::register_user_account() ;
 		$merchant_id = ( $user_id ) ? self::register_merchant( $user_id ) : 0 ;
 

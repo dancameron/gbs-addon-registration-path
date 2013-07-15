@@ -77,6 +77,15 @@
 		</div>
 	</div>
 
+	<?php if ( method_exists( 'Registration_Captcha', 'get_catpha' ) ): ?>
+		<div class="control-group">
+			<label class="control-label" for="gb_contact_captcha">Prove You're not a Robot</label>
+			<div class="controls">
+				<?php echo Registration_Captcha::get_catpha(); ?>
+			</div>
+		</div>
+	<?php endif ?>
+
 	<input name="<?php echo $FORM_ACTION ?>" type="hidden" value="<?php echo $step ?>" />
 
 	<button type="submit" class="reg-button">Submit Pre Registration</button>
