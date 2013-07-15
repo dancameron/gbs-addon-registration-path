@@ -77,6 +77,44 @@
 	<?php endif ?>
 
 	<div class="control-group">
+		<label class="control-label" for="gb_contact_street">Company Address</label>
+		<div class="controls">
+			<input type="text" name="gb_contact_street" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_street'] ) ) echo $_REQUEST['gb_contact_street']; ?>" required>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="gb_contact_city">City</label>
+		<div class="controls">
+			<input type="text" name="gb_contact_city" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_city'] ) ) echo $_REQUEST['gb_contact_city']; ?>" required>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="gb_contact_zone">State</label>
+		<div class="controls">
+			<select name="gb_contact_zone" id="gb_contact_zone">
+					<option></option>
+					<?php $options = Group_Buying_Controller::get_state_options(); ?>
+					<?php foreach ( $options as $group => $states ) : ?>
+						<optgroup label="<?php echo $group ?>">
+							<?php foreach ( $states as $option_key => $option_label ): ?>
+								<option value="<?php echo $option_key; ?>" <?php selected( $option_key, $contact_state ) ?>><?php echo $option_label; ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					<?php endforeach; ?>
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="gb_contact_street">Zip Code</label>
+		<div class="controls">
+			<input type="text" name="gb_contact_postal_code" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_postal_code'] ) ) echo $_REQUEST['gb_contact_postal_code']; ?>" required>
+		</div>
+	</div>
+
+	<div class="control-group">
 		<label class="control-label" for="gb_contact_phone">Company Phone</label>
 		<div class="controls">
 			<input type="text" name="gb_contact_phone" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_phone'] ) ) echo $_REQUEST['gb_contact_phone']; ?>" required>
