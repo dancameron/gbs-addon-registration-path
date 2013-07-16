@@ -115,6 +115,19 @@
 	</div>
 
 	<div class="control-group">
+		<label class="control-label" for="gb_contact_country">Country</label>
+		<div class="controls">
+			<select name="gb_contact_country" id="gb_contact_country">
+					<option></option>
+					<?php $options = Group_Buying_Controller::get_country_options(); ?>
+					<?php foreach ( $options as $key => $label ): ?>
+						<option value="<?php esc_attr_e( $key ); ?>"><?php esc_html_e( $label ); ?></option>
+					<?php endforeach; ?>
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
 		<label class="control-label" for="gb_contact_phone">Company Phone</label>
 		<div class="controls">
 			<input type="text" name="gb_contact_phone" placeholder="" value="<?php if ( isset( $_REQUEST['gb_contact_phone'] ) ) echo $_REQUEST['gb_contact_phone']; ?>" required>
